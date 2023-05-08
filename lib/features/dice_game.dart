@@ -20,35 +20,43 @@ class DicePage extends StatefulWidget {
 
 class _DicePageState extends State<DicePage> {
   bool isloading = false;
-  var newDicImage = 'assets/images/dice-1.png';
+  var newDic1 = 'assets/images/dice-1.png';
+  var newDic2 = 'assets/images/dice-6.png';
 
-  void rollDice() {
-    var imgNext = rand.nextInt(6);
-
+  void rollDice() async {
+    var imgNext = rand.nextInt(6) + 1;
+    var imgPrev = rand.nextInt(6) + 1;
     setState(() {
       isloading = true;
-      imgNext = imgNext + 1;
-      newDicImage = 'assets/images/dice-$imgNext.png';
+      newDic1 = 'assets/images/dice-$imgNext.png';
+      newDic2 = 'assets/images/dice-$imgPrev.png';
       isloading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget preview = Padding(
+    Widget dice1 = Padding(
       padding: EdgeInsets.only(top: 70.h),
       child: Center(
         child: Image.asset(
-          newDicImage,
+          newDic1,
+          width: 150.h,
+          height: 150.h,
+        ),
+      ),
+    );
+    Widget dice2 = Padding(
+      padding: EdgeInsets.only(top: 70.h),
+      child: Center(
+        child: Image.asset(
+          newDic2,
           width: 150.h,
           height: 150.h,
         ),
       ),
     );
 
-    if (isloading) {
-      preview = CircularProgressIndicator();
-    }
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -58,7 +66,12 @@ class _DicePageState extends State<DicePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              preview,
+              isloading
+                  ? CircularProgressIndicator()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [dice1, dice2],
+                    ),
               SizedBox(
                 height: 28.h,
               ),
