@@ -1,6 +1,9 @@
 import 'package:dicegame/utils/color_costants.dart';
 import 'package:dicegame/widgets/my_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../utils/app.assets.dart';
 
 class DicePage extends StatelessWidget {
   static const String route = '/dice_page';
@@ -10,22 +13,24 @@ class DicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: CustomText(
-      //     data: 'Dice Page',
-      //     textAlign: null,
-      //   ),
-      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: appBarGradient,
         ),
+        // child: Center(
+        //   child: CustomText(
+        //     fontSize: 20.sp,
+        //     fontWeight: FontWeight.bold,
+        //     color: kWhite,
+        //     data: 'Dice infor',
+        //     textAlign: null,
+        //   ),
         child: Center(
-          child: CustomText(
-            data: 'Dice infor',
-            textAlign: null,
-          ),
-        ),
+            child: Image.asset(
+          Assets.imageDice1,
+          width: 150.h,
+          height: 150.h,
+        )),
       ),
     );
   }
