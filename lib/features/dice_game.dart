@@ -5,7 +5,7 @@ import 'package:dicegame/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../utils/app.assets.dart';
+final rand = Random();
 
 class DicePage extends StatefulWidget {
   static const String route = '/dice_page';
@@ -19,24 +19,36 @@ class DicePage extends StatefulWidget {
 }
 
 class _DicePageState extends State<DicePage> {
-  // var newDicImage = Assets.imageDice4;
+  bool isloading = false;
   var newDicImage = 'assets/images/dice-1.png';
-  // var imgNext = 1;
 
   void rollDice() {
-    var imgNext = Random().nextInt(6);
+    var imgNext = rand.nextInt(6);
+
     setState(() {
-      newDicImage = Assets.imageDice4;
+      isloading = true;
       imgNext = imgNext + 1;
       newDicImage = 'assets/images/dice-$imgNext.png';
+      isloading = false;
     });
-
-    print('newImage');
-    print('for the $imgNext');
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget preview = Padding(
+      padding: EdgeInsets.only(top: 70.h),
+      child: Center(
+        child: Image.asset(
+          newDicImage,
+          width: 150.h,
+          height: 150.h,
+        ),
+      ),
+    );
+
+    if (isloading) {
+      preview = CircularProgressIndicator();
+    }
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -44,14 +56,9 @@ class _DicePageState extends State<DicePage> {
         ),
         child: Center(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                newDicImage,
-                width: 150.h,
-                height: 150.h,
-              ),
+              preview,
               SizedBox(
                 height: 28.h,
               ),
